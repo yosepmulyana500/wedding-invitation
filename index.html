@@ -96,9 +96,12 @@
             <div class="couple-container">
 
                 <article class="person-card">
-                    <div class="person-photo placeholder-photo">
-                        <span>YM</span>
-                    </div>
+                    <img
+    class="person-photo"
+    src="assets/images/groom.jpeg"
+    alt="Yosep Mulyana"
+    loading="lazy"
+>
 
                     <h3>Yosep Mulyana</h3>
                     <p>The Groom</p>
@@ -107,9 +110,12 @@
                 <div class="couple-divider">&</div>
 
                 <article class="person-card">
-                    <div class="person-photo placeholder-photo">
-                        <span>SD</span>
-                    </div>
+                    <img
+    class="person-photo"
+    src="assets/images/bride.jpeg"
+    alt="Salma Diyanah"
+    loading="lazy"
+>
 
                     <h3>Salma Diyanah</h3>
                     <p>The Bride</p>
@@ -191,20 +197,29 @@
             <h2>Wedding Gallery</h2>
 
             <div class="gallery-grid">
-                <div class="gallery-placeholder">
-                    <span>Y&S</span>
-                    <p>Our Photo</p>
-                </div>
+                <figure class="gallery-item">
+        <img
+            src="assets/images/gallery-1.jpeg"
+            alt="Yosep dan Salma"
+            loading="lazy"
+        >
+    </figure>
 
-                <div class="gallery-placeholder">
-                    <span>Y&S</span>
-                    <p>Our Photo</p>
-                </div>
+                 <figure class="gallery-item">
+        <img
+            src="assets/images/gallery-2.jpeg"
+            alt="Momen Yosep dan Salma"
+            loading="lazy"
+        >
+    </figure>
 
-                <div class="gallery-placeholder">
-                    <span>Y&S</span>
-                    <p>Our Photo</p>
-                </div>
+                <figure class="gallery-item">
+        <img
+            src="assets/images/gallery-3.jpg"
+            alt="Wedding gallery Yosep dan Salma"
+            loading="lazy"
+        >
+    </figure>
             </div>
         </section>
 
@@ -235,12 +250,17 @@
         ♫
     </button>
 
-    <audio id="background-music" loop>
-        <source
-            src="assets/audio/wedding-song.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
+    <audio
+    id="background-music"
+    loop
+    preload="auto"
+    playsinline
+>
+    <source
+        src="assets/audio/wedding-song.mp3"
+        type="audio/mpeg"
+    >
+</audio>
 
     <script src="script.js"></script>
 </body>

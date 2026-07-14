@@ -827,3 +827,75 @@ a {
         animation: none;
     }
 }
+
+/*ini buat foto cover*/
+.opening {
+    background-image:
+        linear-gradient(
+            rgba(255, 253, 248, 0.35),
+            rgba(244, 234, 216, 0.58)
+        ),
+        url("assets/images/cover.jpg");
+
+    background-size: cover,contain;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #f4ead8;
+}
+
+.hero {
+    background:
+        linear-gradient(
+            rgba(255, 253, 248, 0.58),
+            rgba(238, 225, 202, 0.82)
+        ),
+        url("assets/images/cover.jpg") center / cover no-repeat;
+
+        background-size: cover, contain;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #f4ead8;
+}
+
+.person-photo {
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.gallery-item {
+    position: relative;
+    min-height: 300px;
+    overflow: hidden;
+    background: var(--cream-dark);
+    box-shadow: var(--shadow);
+    transition:
+        transform 0.45s ease,
+        box-shadow 0.45s ease;
+}
+
+.gallery-item img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 55px rgba(83, 63, 36, 0.22);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.07);
+}
+
+@media (min-width: 700px) {
+    .gallery-item:first-child {
+        grid-row: span 2;
+        min-height: 616px;
+    }
+}
