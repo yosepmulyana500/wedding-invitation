@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     openButton.addEventListener("click", () => {
     openButton.disabled = true;
-
-    backgroundMusic.volume = 0.45;
     playMusic();
 
     openingScreen.style.opacity = "0";
@@ -56,36 +54,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* Background music */
+/* Background music */
 
-    function updateMusicButton(isPlaying) {
+function updateMusicButton(isPlaying) {
     musicButton.classList.remove("hidden");
+    musicButton.textContent = isPlaying ? "❚❚" : "▶";
+    musicButton.classList.toggle("playing", isPlaying);
 
-    if (isPlaying) {
-        musicButton.textContent = "❚❚";
-        musicButton.classList.add("playing");
-        musicButton.setAttribute(
-            "aria-label",
-            "Pause background music"
-        );
-    } else {
-        musicButton.textContent = "▶";
-        musicButton.classList.remove("playing");
-        musicButton.setAttribute(
-            "aria-label",
-            "Play background music"
-        );
-    }
+    musicButton.setAttribute(
+        "aria-label",
+        isPlaying
+            ? "Pause background music"
+            : "Play background music"
+    );
 }
 
 async function playMusic() {
-    backgroundMusic.volume = 0.45;
+    musicButton.classList.remove("hidden");
+    backgroundMusic.muted = false;
 
     try {
         await backgroundMusic.play();
         updateMusicButton(true);
     } catch (error) {
         updateMusicButton(false);
-        console.error("Music failed:", error);
+        console.error("Music playback failed:", error);
     }
 }
 
@@ -94,12 +87,12 @@ function pauseMusic() {
     updateMusicButton(false);
 }
 
-musicButton.addEventListener("click", (event) => {
+musicButton.addEventListener("click", async (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (backgroundMusic.paused) {
-        playMusic();
+    if (backgroundMusic.paused || backgroundMusic.ended) {
+        await playMusic();
     } else {
         pauseMusic();
     }
@@ -113,6 +106,10 @@ backgroundMusic.addEventListener("pause", () => {
     updateMusicButton(false);
 });
 
+backgroundMusic.addEventListener("error", () => {
+    updateMusicButton(false);
+    console.error("Audio file error:", backgroundMusic.error);
+});
 
     /* Wedding countdown */
 
