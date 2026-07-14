@@ -242,25 +242,23 @@
 
 
     <!-- Music -->
-   <button
+   <!-- Music Button -->
+<button
     type="button"
     id="music-button"
     class="music-button hidden"
+    aria-label="Play background music"
 >
-    ▶
+    ♫
 </button>
 
 <audio
     id="background-music"
-    class="native-audio-player"
     src="assets/audio/wedding-song.mp3"
-    controls
     loop
-    preload="metadata"
+    preload="auto"
     playsinline
->
-    Browser Anda tidak mendukung audio.
-</audio>
+></audio>
 
     <script src="script.js"></script>
 </body>

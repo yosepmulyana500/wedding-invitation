@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     openButton.addEventListener("click", () => {
     openButton.disabled = true;
 
+     playMusic();
+
     openingScreen.style.opacity = "0";
 
     setTimeout(() => {
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateMusicButton(isPlaying) {
     musicButton.classList.remove("hidden");
-    musicButton.textContent = isPlaying ? "❚❚" : "▶";
+    musicButton.textContent = "♫";
     musicButton.classList.toggle("playing", isPlaying);
 
     musicButton.setAttribute(
