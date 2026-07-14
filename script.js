@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     openButton.addEventListener("click", () => {
     openButton.disabled = true;
-    playMusic();
 
     openingScreen.style.opacity = "0";
 

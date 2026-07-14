@@ -899,3 +899,26 @@ a {
         min-height: 616px;
     }
 }
+
+.music-button {
+    display: none !important;
+}
+
+.native-audio-player {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    z-index: 2000;
+
+    display: none;
+    width: min(320px, calc(100% - 32px));
+    height: 48px;
+
+    transform: translateX(-50%);
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(68, 55, 43, 0.25);
+}
+
+body.invitation-open .native-audio-player {
+    display: block;
+}
