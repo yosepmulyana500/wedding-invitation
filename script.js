@@ -31,21 +31,28 @@ document.addEventListener("DOMContentLoaded", () => {
     openingScreen.style.transition = "opacity 0.7s ease";
 
     openButton.addEventListener("click", () => {
-        openButton.disabled = true;
-        openingScreen.style.opacity = "0";
+    openButton.disabled = true;
 
-        setTimeout(() => {
-            openingScreen.classList.add("hidden");
-            invitation.classList.remove("hidden");
+    backgroundMusic.volume = 0.45;
+    playMusic();
 
-            document.body.classList.add("invitation-open");
+    openingScreen.style.opacity = "0";
 
-            invitationOpened = true;
-            window.scrollTo(0, 0);
+    setTimeout(() => {
+        openingScreen.classList.add("hidden");
+        invitation.classList.remove("hidden");
 
-            playMusic();
-        }, 700);
-    });
+        document.body.classList.add("invitation-open");
+
+        invitationOpened = true;
+        window.scrollTo(0, 0);
+
+        if (!backgroundMusic.paused) {
+            musicButton.classList.remove("hidden");
+            musicButton.classList.add("playing");
+        }
+    }, 700);
+});
 
 
     /* Background music */
@@ -195,6 +202,112 @@ document.addEventListener("DOMContentLoaded", () => {
 
         revealElements.forEach((element) => {
             observer.observe(element);
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduceMotion) {
+        return;
+    }
+
+
+    /* Floating golden petals */
+
+    const petalsContainer = document.createElement("div");
+    petalsContainer.className = "floating-petals";
+    petalsContainer.setAttribute("aria-hidden", "true");
+
+    document.body.appendChild(petalsContainer);
+
+    const totalPetals = 22;
+
+    for (let index = 0; index < totalPetals; index += 1) {
+        const petal = document.createElement("span");
+        const size = 7 + Math.random() * 7;
+        const drift = -90 + Math.random() * 180;
+
+        petal.className = "gold-petal";
+
+        petal.style.left = `${Math.random() * 100}%`;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size * 1.65}px`;
+        petal.style.animationDuration =
+            `${9 + Math.random() * 9}s`;
+        petal.style.animationDelay =
+            `${Math.random() * -18}s`;
+        petal.style.setProperty("--drift", `${drift}px`);
+
+        petalsContainer.appendChild(petal);
+    }
+
+
+    /* Scroll progress */
+
+    const scrollProgress = document.createElement("div");
+    scrollProgress.className = "scroll-progress";
+
+    document.body.appendChild(scrollProgress);
+
+    function updateScrollProgress() {
+        const maximumScroll =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+        const progress =
+            maximumScroll > 0
+                ? window.scrollY / maximumScroll
+                : 0;
+
+        scrollProgress.style.transform =
+            `scaleX(${Math.min(progress, 1)})`;
+    }
+
+    window.addEventListener(
+        "scroll",
+        updateScrollProgress,
+        { passive: true }
+    );
+
+
+    /* Hero parallax for mouse devices */
+
+    const hero = document.querySelector(".hero");
+    const heroContent = document.querySelector(".hero-content");
+
+    const supportsMouse = window.matchMedia(
+        "(pointer: fine)"
+    ).matches;
+
+    if (hero && heroContent && supportsMouse) {
+        hero.addEventListener("pointermove", (event) => {
+            const rectangle = hero.getBoundingClientRect();
+
+            const horizontalPosition =
+                (event.clientX - rectangle.left) /
+                rectangle.width -
+                0.5;
+
+            const verticalPosition =
+                (event.clientY - rectangle.top) /
+                rectangle.height -
+                0.5;
+
+            heroContent.style.transform =
+                `translate3d(
+                    ${horizontalPosition * 18}px,
+                    ${verticalPosition * 18}px,
+                    0
+                )`;
+        });
+
+        hero.addEventListener("pointerleave", () => {
+            heroContent.style.transform =
+                "translate3d(0, 0, 0)";
         });
     }
 });
