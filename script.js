@@ -57,43 +57,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* Background music */
 
-    async function playMusic() {
+    function updateMusicButton(isPlaying) {
     musicButton.classList.remove("hidden");
 
-    try {
-        await backgroundMusic.play();
-
+    if (isPlaying) {
         musicButton.textContent = "❚❚";
         musicButton.classList.add("playing");
         musicButton.setAttribute(
             "aria-label",
             "Pause background music"
         );
-    } catch (error) {
+    } else {
         musicButton.textContent = "▶";
         musicButton.classList.remove("playing");
         musicButton.setAttribute(
             "aria-label",
             "Play background music"
         );
-
-        console.log("Autoplay blocked:", error);
     }
 }
 
-    musicButton.addEventListener("click", async () => {
-    if (backgroundMusic.paused) {
-        await playMusic();
-    } else {
-        backgroundMusic.pause();
+async function playMusic() {
+    backgroundMusic.volume = 0.45;
 
-        musicButton.textContent = "▶";
-        musicButton.classList.remove("playing");
-        musicButton.setAttribute(
-            "aria-label",
-            "Play background music"
-        );
+    try {
+        await backgroundMusic.play();
+        updateMusicButton(true);
+    } catch (error) {
+        updateMusicButton(false);
+        console.error("Music failed:", error);
     }
+}
+
+function pauseMusic() {
+    backgroundMusic.pause();
+    updateMusicButton(false);
+}
+
+musicButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (backgroundMusic.paused) {
+        playMusic();
+    } else {
+        pauseMusic();
+    }
+});
+
+backgroundMusic.addEventListener("play", () => {
+    updateMusicButton(true);
+});
+
+backgroundMusic.addEventListener("pause", () => {
+    updateMusicButton(false);
 });
 
 
