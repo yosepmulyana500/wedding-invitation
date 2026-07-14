@@ -58,49 +58,43 @@ document.addEventListener("DOMContentLoaded", () => {
     /* Background music */
 
     async function playMusic() {
-        try {
-            await backgroundMusic.play();
+    musicButton.classList.remove("hidden");
 
-            if (invitationOpened) {
-                musicButton.classList.remove("hidden");
-                musicButton.classList.add("playing");
-                musicButton.setAttribute(
-                    "aria-label",
-                    "Pause background music"
-                );
-            }
-        } catch (error) {
-            /*
-             * Music will remain hidden if the audio file
-             * has not been added or cannot be played.
-             */
-            musicButton.classList.add("hidden");
-        }
+    try {
+        await backgroundMusic.play();
+
+        musicButton.textContent = "❚❚";
+        musicButton.classList.add("playing");
+        musicButton.setAttribute(
+            "aria-label",
+            "Pause background music"
+        );
+    } catch (error) {
+        musicButton.textContent = "▶";
+        musicButton.classList.remove("playing");
+        musicButton.setAttribute(
+            "aria-label",
+            "Play background music"
+        );
+
+        console.log("Autoplay blocked:", error);
     }
+}
 
     musicButton.addEventListener("click", async () => {
-        if (backgroundMusic.paused) {
-            try {
-                await backgroundMusic.play();
+    if (backgroundMusic.paused) {
+        await playMusic();
+    } else {
+        backgroundMusic.pause();
 
-                musicButton.classList.add("playing");
-                musicButton.setAttribute(
-                    "aria-label",
-                    "Pause background music"
-                );
-            } catch (error) {
-                musicButton.classList.remove("playing");
-            }
-        } else {
-            backgroundMusic.pause();
-
-            musicButton.classList.remove("playing");
-            musicButton.setAttribute(
-                "aria-label",
-                "Play background music"
-            );
-        }
-    });
+        musicButton.textContent = "▶";
+        musicButton.classList.remove("playing");
+        musicButton.setAttribute(
+            "aria-label",
+            "Play background music"
+        );
+    }
+});
 
 
     /* Wedding countdown */
